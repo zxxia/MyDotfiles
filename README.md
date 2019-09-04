@@ -1,4 +1,1 @@
-# .vimrc
-My .vimrc
-
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+My .vimrc and .tmux.conf
