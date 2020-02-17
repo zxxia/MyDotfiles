@@ -119,7 +119,7 @@ set sidescroll=1
 " Remove trailing whitespace
 if !exists("*StripTrailingWhitespace")
   function StripTrailingWhitespace()
-    if !&binary && &filetype != 'diff' && &filetype != 'markdown' && &filetype != 'tex'
+    if !&binary && &filetype != 'diff' && &filetype != 'markdown' && &filetype != 'csv' && &filetype != 'tex' && &filetype != 'txt'
       normal mz
       normal Hmy
       %s/\s\+$//e
@@ -441,4 +441,7 @@ let g:coc_global_extensions = [
   \ ]
 
 
+" on Ubuntu
+" set clipboard=unnamedplus
+" on Mac
 set clipboard=unnamed
