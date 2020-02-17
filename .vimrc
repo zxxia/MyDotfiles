@@ -2,19 +2,27 @@
 set nocompatible
 
 filetype off
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 call plug#begin('~/.vim/plugged')
 Plug 'Yggdroot/indentLine'
 Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
-" Plug 'ycm-core/YouCompleteMe'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-python/python-syntax'
 Plug 'ErichDonGubler/vim-sublime-monokai'
-Plug 'dense-analysis/ale'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 
@@ -43,6 +51,8 @@ set softtabstop=4
 
 " Show line number
 set number
+" set relativenumber
+set cursorline
 
 " Show line #, column #
 set ruler
@@ -94,8 +104,9 @@ syntax enable
 " set background=light    "设置背景色"
 " colorscheme default "solarized
 " set t_Co=16
+" set termguicolors
 " colorscheme sublimemonokai
-" colorscheme molokai
+colorscheme monokai
 
 " Allow backspace to delete to the line above
 set backspace=indent,eol,start
@@ -108,7 +119,7 @@ set sidescroll=1
 " Remove trailing whitespace
 if !exists("*StripTrailingWhitespace")
   function StripTrailingWhitespace()
-    if !&binary && &filetype != 'diff'
+    if !&binary && &filetype != 'diff' && &filetype != 'markdown' && &filetype != 'tex'
       normal mz
       normal Hmy
       %s/\s\+$//e
@@ -143,6 +154,8 @@ let mapleader=' '
 
 set showcmd
 set wildmenu
+set pastetoggle=<F2>
+
 
 set completeopt=longest,menuone
 " inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
@@ -151,6 +164,22 @@ inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
 
 " inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
 "   \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+" Easy navigation among tabs
+" nnoremap <Leader>h :tabprevious<CR>
+" nnoremap <Leader>l :tabnext<CR>
+" nnoremap <Leader>j :tabprevious<CR>
+" nnoremap <Leader>k :tabnext<CR>
+nnoremap <Leader>h :bprevious<CR>
+nnoremap <Leader>l :bnext<CR>
+nnoremap <Leader>j :bprevious<CR>
+nnoremap <Leader>k :bnext<CR>
+
+"keep visual mode after indent
+vnoremap > >gv
+vnoremap < <gv
+
+
 
 
 """"""""""""""""""""""""""
@@ -164,17 +193,21 @@ let g:indentLine_enabled = 1
 """"""""""""""""""""""""
 " Settings of NERDTree "
 """"""""""""""""""""""""
+" open a NERDTree automatically when vim starts up
 "autocmd vimenter * NERDTree
-"autocmd VimEnter * wincmd p
+" close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 map <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeWinSize=25
+let NERDTreeQuitOnOpen = 0
+
+
 
 """""""""""""""""""""""""""""
 " Settings of NERDCommenter "
 """""""""""""""""""""""""""""
 " Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 0
+let g:NERDSpaceDelims = 1
 
 " Use compact syntax for prettified multi-line comments
 let g:NERDCompactSexyComs = 1
@@ -186,7 +219,8 @@ let g:NERDDefaultAlign = 'left'
 " let g:NERDAltDelims_java = 1
 
 " Add your own custom formats or override the defaults
-" let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' },
+            \ 'python': {'left': '#'}, }
 
 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDCommentEmptyLines = 1
@@ -200,11 +234,11 @@ let g:NERDToggleCheckAllLines = 1
 """"""""""""""""""""""
 " Settings of vim-go "
 """"""""""""""""""""""
-" let g:go_highlight_types = 1
-" let g:go_highlight_fields = 1
-" let g:go_highlight_functions = 1
-" let g:go_highlight_function_calls = 1
-" let g:go_highlight_operators = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
 
 
 """""""""""""""""""""""
@@ -212,6 +246,10 @@ let g:NERDToggleCheckAllLines = 1
 """""""""""""""""""""""
 " let g:airline_solarized_bg='dark'
 " let g:airline_powerline_fonts = 1
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
 
 """""""""""""""""""""""""""""
 " Settings of python-syntax "
@@ -219,42 +257,57 @@ let g:NERDToggleCheckAllLines = 1
 let g:python_highlight_all = 1
 
 
-"""""""""""""""""""
-" Settings of ALE "
-""""""""""""""""""
-" Check Python files with flake8 and pylint.
-let g:ale_linters = {'python':['flake8', 'pylint']}
-" Fix Python files with autopep8 and yapf.
-let g:ale_fixers = {'python': ['autopep8', 'yapf']}
-" Disable warnings about trailing whitespace for Python files.
-let g:ale_warn_about_trailing_whitespace = 0
-let g:ale_enabled = 1
-
 
 """""""""""""""""""""""""
 " settings of gutentags "
 """""""""""""""""""""""""
+" Turn on error tracing
+" let g:gutentags_trace = 0
 " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+let g:gutentags_exclude_filetypes = ['csv']
+let g:gutentags_ctags_exclude = ["*.csv"]
 
 " 所生成的数据文件的名称
 let g:gutentags_ctags_tagfile = '.tags'
 
 " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-let s:vim_tags = expand('~/.cache/tags')
-let g:gutentags_cache_dir = s:vim_tags
+" let s:vim_tags = expand('~/.cache/tags')
+" let g:gutentags_cache_dir = s:vim_tags
+" 检测 ~/.cache/tags 不存在就新建
+" if !isdirectory(s:vim_tags)
+   " silent! call mkdir(s:vim_tags, 'p')
+" endif
 
 " 配置 ctags 的参数
 let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
 let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
-" 检测 ~/.cache/tags 不存在就新建
-if !isdirectory(s:vim_tags)
-   silent! call mkdir(s:vim_tags, 'p')
-endif
 set tags=./.tags;,.tags
 set statusline+=%{gutentags#statusline()}
+
+
+""""""""""""""""""""""""""""""""
+"     settings of LeaderF      "
+""""""""""""""""""""""""""""""""
+let g:Lf_ShortcutF = '<c-p>'
+" let g:Lf_ShortcutB = '<m-n>'
+" nnoremap <Leader>h :tabprevious<CR>
+noremap <Leader>n :LeaderfMru<cr>
+noremap <Leader>f :LeaderfFunction!<cr>
+noremap <Leader>b :LeaderfBuffer<cr>
+noremap <Leader>t :LeaderfTag<cr>
+let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
+
+let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
+let g:Lf_WorkingDirectoryMode = 'Ac'
+let g:Lf_WindowHeight = 0.30
+let g:Lf_CacheDirectory = expand('~/.vim/cache')
+let g:Lf_ShowRelativePath = 1
+" let g:Lf_HideHelp = 1
+let g:Lf_StlColorscheme = 'powerline'
+let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
 
 
 
@@ -340,3 +393,52 @@ let g:mkdp_port = ''
 " preview page title
 " ${name} will be replace with the file name
 let g:mkdp_page_title = '「${name}」'
+nmap <leader>s <Plug>MarkdownPreview
+
+
+"""
+" coc settings
+"""
+
+" always show signcolumn
+set signcolumn=yes
+
+set updatetime=300
+" Better display for messages
+set cmdheight=2
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Add status line support, for integration with other plugin, checkout `:h coc-status`
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" use `:OR` for organize import of current buffer
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" nmap ge :CocCommand explorer<CR>
+" map <C-n> :CocCommand explorer<CR>
+" coc config
+let g:coc_global_extensions = [
+  \ 'coc-pairs',
+  \ 'coc-json',
+  \ 'coc-lists',
+  \ 'coc-python',
+  \ 'coc-tag',
+  \ 'coc-highlight',
+  \ 'coc-html',
+  \ ]
+
+
+set clipboard=unnamed
