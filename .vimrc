@@ -11,18 +11,22 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'Yggdroot/indentLine'
-Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
+Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoUpdateBinaries'}
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-python/python-syntax'
-Plug 'ErichDonGubler/vim-sublime-monokai'
+Plug 'vim-python/python-syntax', {'for': 'python'}
+Plug 'crusoexia/vim-monokai'
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': { -> mkdp#util#install() } }
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'liuchengxu/vista.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'lervag/vimtex', {'for': 'latex'}
 call plug#end()
 
 
@@ -100,13 +104,11 @@ set noswapfile
 
 " Syntax Highlight
 syntax enable
-"let g:molokai_original = 1
 " set background=light    "设置背景色"
-" colorscheme default "solarized
 " set t_Co=16
 " set termguicolors
-" colorscheme sublimemonokai
 colorscheme monokai
+" colorscheme default "solarized
 
 " Allow backspace to delete to the line above
 set backspace=indent,eol,start
@@ -135,10 +137,10 @@ autocmd BufWritePre     * :call StripTrailingWhitespace()
 
 
 " Enforcing Navigation Purity
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <left> <Nop>
-noremap <Right> <Nop>
+" noremap <Up> <Nop>
+" noremap <Down> <Nop>
+" noremap <left> <Nop>
+" noremap <Right> <Nop>
 
 " Easier split navigations
 nnoremap <C-J> <C-W><C-J>
@@ -156,6 +158,8 @@ set showcmd
 set wildmenu
 set pastetoggle=<F2>
 
+set hidden
+
 
 set completeopt=longest,menuone
 " inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
@@ -166,10 +170,6 @@ inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
 "   \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 " Easy navigation among tabs
-" nnoremap <Leader>h :tabprevious<CR>
-" nnoremap <Leader>l :tabnext<CR>
-" nnoremap <Leader>j :tabprevious<CR>
-" nnoremap <Leader>k :tabnext<CR>
 nnoremap <Leader>h :bprevious<CR>
 nnoremap <Leader>l :bnext<CR>
 nnoremap <Leader>j :bprevious<CR>
@@ -180,6 +180,25 @@ vnoremap > >gv
 vnoremap < <gv
 
 
+" make undor available after closing files
+set undofile
+set undodir=~/.vim/undodir
+
+
+" on Ubuntu
+if has("win32")
+  "Windows options here
+else
+    if has("unix")
+        let s:uname = system("uname")
+        if s:uname == "Darwin\n"
+            set clipboard=unnamed
+            "Mac options here
+        else
+            set clipboard=unnamedplus
+        endif
+    endif
+endif
 
 
 """"""""""""""""""""""""""
@@ -249,7 +268,7 @@ let g:go_highlight_operators = 1
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
 " Show just the filename
-let g:airline#extensions#tabline#fnamemod = ':t'
+" let g:airline#extensions#tabline#fnamemod = ':t'
 
 """""""""""""""""""""""""""""
 " Settings of python-syntax "
@@ -265,7 +284,7 @@ let g:python_highlight_all = 1
 " let g:gutentags_trace = 0
 " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
-let g:gutentags_exclude_filetypes = ['csv']
+let g:gutentags_exclude_filetypes = ['csv', 'json', 'markdown']
 let g:gutentags_ctags_exclude = ["*.csv"]
 
 " 所生成的数据文件的名称
@@ -280,9 +299,10 @@ let g:gutentags_ctags_tagfile = '.tags'
 " endif
 
 " 配置 ctags 的参数
-let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extras=+q']
 let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 
 set tags=./.tags;,.tags
 set statusline+=%{gutentags#statusline()}
@@ -294,10 +314,11 @@ set statusline+=%{gutentags#statusline()}
 let g:Lf_ShortcutF = '<c-p>'
 " let g:Lf_ShortcutB = '<m-n>'
 " nnoremap <Leader>h :tabprevious<CR>
-noremap <Leader>n :LeaderfMru<cr>
-noremap <Leader>f :LeaderfFunction!<cr>
-noremap <Leader>b :LeaderfBuffer<cr>
-noremap <Leader>t :LeaderfTag<cr>
+noremap <Leader>fm :LeaderfMru<cr>
+noremap <Leader>ff :LeaderfFunction!<cr>
+noremap <Leader>fb :LeaderfBuffer<cr>
+noremap <Leader>ft :LeaderfTag<cr>
+noremap <Leader>ft :LeaderfBufTag<cr>
 let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
 
 let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
@@ -394,11 +415,13 @@ let g:mkdp_port = ''
 " ${name} will be replace with the file name
 let g:mkdp_page_title = '「${name}」'
 nmap <leader>s <Plug>MarkdownPreview
+" nmap <M-s> <Plug>MarkdownPreviewStop
+" nmap <C-p> <Plug>MarkdownPreviewToggle
 
 
-"""
-" coc settings
-"""
+"""""""""""""""""""
+" settings of coc "
+"""""""""""""""""""
 
 " always show signcolumn
 set signcolumn=yes
@@ -410,7 +433,7 @@ set cmdheight=2
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -427,9 +450,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
 
-" nmap ge :CocCommand explorer<CR>
-" map <C-n> :CocCommand explorer<CR>
-" coc config
+" coc extentions
 let g:coc_global_extensions = [
   \ 'coc-pairs',
   \ 'coc-json',
@@ -438,10 +459,11 @@ let g:coc_global_extensions = [
   \ 'coc-tag',
   \ 'coc-highlight',
   \ 'coc-html',
+  \ 'coc-markdownlint',
+  \ 'coc-vimtex',
   \ ]
 
 
-" on Ubuntu
-" set clipboard=unnamedplus
-" on Mac
-set clipboard=unnamed
+""""""""""""""""""""""
+" settings of vimtex "
+""""""""""""""""""""""
