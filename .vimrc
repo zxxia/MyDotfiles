@@ -11,7 +11,7 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'Yggdroot/indentLine'
-Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoUpdateBinaries'}
+" Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoUpdateBinaries'}
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -407,7 +407,7 @@ let g:mkdp_preview_options = {
 let g:mkdp_markdown_css = ''
 
 " use a custom highlight style must absolute path
-let g:mkdp_highlight_css = ''
+let g:mkdp_highlight_css = '/Users/zxxia/.vim/plugged/markdown-preview.nvim/solarized_dark.css'
 
 " use a custom port to start server or random for empty
 let g:mkdp_port = ''
@@ -435,7 +435,16 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 " set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
@@ -462,6 +471,7 @@ let g:coc_global_extensions = [
   \ 'coc-html',
   \ 'coc-markdownlint',
   \ 'coc-vimtex',
+  \ 'coc-snippets',
   \ ]
 
 
