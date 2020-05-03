@@ -26,7 +26,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'liuchengxu/vista.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'lervag/vimtex', {'for': 'latex'}
+Plug 'lervag/vimtex'
 call plug#end()
 
 
@@ -159,6 +159,7 @@ set wildmenu
 set pastetoggle=<F2>
 
 set hidden
+" set spell
 
 
 set completeopt=longest,menuone
@@ -478,3 +479,4 @@ let g:coc_global_extensions = [
 """"""""""""""""""""""
 " settings of vimtex "
 """"""""""""""""""""""
+let g:vimtex_view_method='skim'
