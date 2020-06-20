@@ -19,7 +19,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-python/python-syntax', {'for': 'python'}
 Plug 'crusoexia/vim-monokai'
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
 Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': { -> mkdp#util#install() } }
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -65,7 +65,7 @@ set ruler
 set fileformat=unix
 
 " UTF-8 encoding
-set encoding=utf8
+set encoding=UTF-8
 
 " Enable mouse in all editing mode
 set mouse=a
@@ -118,6 +118,9 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 set sidescroll=1
 
+" 5 lines offset between the cursor and top/bottom margin
+set scrolloff=5
+
 " Remove trailing whitespace
 if !exists("*StripTrailingWhitespace")
   function StripTrailingWhitespace()
@@ -135,12 +138,6 @@ autocmd FileAppendPre   * :call StripTrailingWhitespace()
 autocmd FilterWritePre  * :call StripTrailingWhitespace()
 autocmd BufWritePre     * :call StripTrailingWhitespace()
 
-
-" Enforcing Navigation Purity
-" noremap <Up> <Nop>
-" noremap <Down> <Nop>
-" noremap <left> <Nop>
-" noremap <Right> <Nop>
 
 " Easier split navigations
 nnoremap <C-J> <C-W><C-J>
@@ -164,8 +161,8 @@ set hidden
 
 set completeopt=longest,menuone
 " inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-   \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+" inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+"    \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 " inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
 "   \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
@@ -201,6 +198,8 @@ else
     endif
 endif
 
+" expand gnuplot extensions
+au BufNewFile,BufRead *.plt,*.gnuplot setf gnuplot
 
 """"""""""""""""""""""""""
 " Settings of IndentLine "
@@ -331,6 +330,9 @@ let g:Lf_ShowRelativePath = 1
 " let g:Lf_HideHelp = 1
 let g:Lf_StlColorscheme = 'powerline'
 let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
+let g:Lf_ShowDevIcons = 0
+let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
 
 
 
@@ -409,6 +411,7 @@ let g:mkdp_markdown_css = ''
 
 " use a custom highlight style must absolute path
 let g:mkdp_highlight_css = '/Users/zxxia/.vim/plugged/markdown-preview.nvim/solarized_dark.css'
+" let g:mkdp_highlight_css = '/Users/zxxia/.vim/plugged/markdown-preview.nvim/github_markdown.css'
 
 " use a custom port to start server or random for empty
 let g:mkdp_port = ''
@@ -426,11 +429,34 @@ nmap <leader>s <Plug>MarkdownPreview
 """""""""""""""""""
 
 " always show signcolumn
-set signcolumn=yes
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
 
 set updatetime=300
 " Better display for messages
 set cmdheight=2
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
@@ -473,6 +499,7 @@ let g:coc_global_extensions = [
   \ 'coc-markdownlint',
   \ 'coc-vimtex',
   \ 'coc-snippets',
+  \ 'coc-git',
   \ ]
 
 
@@ -480,3 +507,4 @@ let g:coc_global_extensions = [
 " settings of vimtex "
 """"""""""""""""""""""
 let g:vimtex_view_method='skim'
+let g:tex_conceal = ""
