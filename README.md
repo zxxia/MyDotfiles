@@ -1,1 +1,4 @@
-My .vimrc and .tmux.conf
+# My Dotfiles
+
+- .vimrc
+- .tmux.conf
