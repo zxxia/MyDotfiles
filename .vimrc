@@ -156,7 +156,7 @@ set wildmenu
 set pastetoggle=<F2>
 
 set hidden
-" set spell
+autocmd FileType latex,tex,md,markdown setlocal spell
 
 
 set completeopt=longest,menuone
