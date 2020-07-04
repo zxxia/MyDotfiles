@@ -1,5 +1,4 @@
-" Remove vi compatiblity
-set nocompatible
+set nocompatible    " Remove vi compatiblity
 
 filetype off
 
@@ -34,92 +33,67 @@ call plug#end()
 " Settings native to vim "
 """"""""""""""""""""""""""
 
-" Use filetypes for indentation.
-filetype plugin indent on
-
-" set paste
-
-" Indent automatically
-set autoindent
-
-" Replace tabs with spaces
-set expandtab
-
-" Tabs are alligned to 4-space interval
-set tabstop=4
-
-" Tabs are 4 spaces.
-set shiftwidth=4
-
+filetype plugin indent on   " Use filetypes for indentation.
+set autoindent              " Indent automatically
+set expandtab               " Replace tabs with spaces
+set tabstop=4               " Tabs are alligned to 4-space interval
+set shiftwidth=4            " Tabs are 4 spaces.
 set softtabstop=4
-
-" Show line number
-set number
+set number                  " Show line number
 " set relativenumber
-set cursorline
-
-" Show line #, column #
-set ruler
-
-" Unix file format
-set fileformat=unix
-
-" UTF-8 encoding
-set encoding=UTF-8
-
-" Enable mouse in all editing mode
-set mouse=a
-
-" Enable mouse input
-set selectmode=mouse
-
-" Ignore case difference in search
-set ignorecase
-
-" Incrementally search
-set incsearch
-
-" Highlight search results
-set hlsearch
-
+set cursorline              " Show a horizontal line on cursorline
+set ruler                   " Show line #, column #
+set fileformat=unix         " Unix file format
+set encoding=UTF-8          " UTF-8 encoding
+set mouse=a                 " Enable mouse in all editing mode
+set selectmode=mouse        " Enable mouse input
+set ignorecase              " Ignore case difference in search
+set incsearch               " Incrementally search
+set splitbelow              " More natural split opening, cursor in bottom window
+set splitright              " More natural split opening, cursor in right window
+let mapleader=' '           " Set space to leader key
+set showcmd
+set wildmenu                " Beeter command completion
+set pastetoggle=<F2>        " Press F2 to turn on paste mode
+set hidden                  " When on a buffer becomes hidden when it is abandoned.
+set hlsearch                " Highlight search results
 set smartcase
-
-" Show matching parentesis, brackets, and braces
-set showmatch
-
-" Flash matching pair for 0.2 seconds.
-set mat=2
-
-" Mark characters after line is longer than 80 characters.
-" match ErrorMsg '\%81v.\+'
-set colorcolumn=80
-highlight ColorColumn ctermbg=lightgrey guibg=white
-
+set showmatch               " Show matching parentesis, brackets, and braces
+set mat=2                   " Flash matching pair for 0.2 seconds.
 set nowrap
-
-" Do not create swap files
-set nobackup
+set nobackup                " Do not create swap files
 set noswapfile
-
-
-" Syntax Highlight
-syntax enable
+set sidescroll=1
+set scrolloff=5             " 5 lines offset between the cursor and top/bottom margin
+set backspace=indent,eol,start " Allow backspace to delete to the line above
+set completeopt=longest,menuone
+set undofile                " make undor available after closing files
+set undodir=~/.vim/undodir
+set colorcolumn=80          " Mark characters after line is longer than 80 characters.
+highlight ColorColumn ctermbg=lightgrey guibg=white
+syntax enable               " Syntax Highlight
 " set background=light    "设置背景色"
 " set t_Co=16
-" set termguicolors
 colorscheme monokai
 " colorscheme default "solarized
-
-" Allow backspace to delete to the line above
-set backspace=indent,eol,start
+if has("win32")
+  "Windows options here
+else
+    if has("unix")
+        let s:uname = system("uname")
+        if s:uname == "Darwin\n"
+            set clipboard=unnamed
+            "Mac options here
+        else
+            " on linux(Ubuntu)
+            set clipboard=unnamedplus
+        endif
+    endif
+endif
 
 " Make cursor to stay at the place where it was at previous file exit when opening the file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-set sidescroll=1
-
-" 5 lines offset between the cursor and top/bottom margin
-set scrolloff=5
 
 " Remove trailing whitespace
 if !exists("*StripTrailingWhitespace")
@@ -145,27 +119,10 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" More Natural Split Opening
-set splitbelow
-set splitright
-
-let mapleader=' '
-
-set showcmd
-set wildmenu
-set pastetoggle=<F2>
-
-set hidden
 autocmd FileType latex,tex,md,markdown setlocal spell
+" expand gnuplot extensions
+au BufNewFile,BufRead *.plt,*.gnuplot setf gnuplot
 
-
-set completeopt=longest,menuone
-" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-"    \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-
-" inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-"   \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 " Easy navigation among tabs
 nnoremap <Leader>h :bprevious<CR>
@@ -177,29 +134,6 @@ nnoremap <Leader>k :bnext<CR>
 vnoremap > >gv
 vnoremap < <gv
 
-
-" make undor available after closing files
-set undofile
-set undodir=~/.vim/undodir
-
-
-" on Ubuntu
-if has("win32")
-  "Windows options here
-else
-    if has("unix")
-        let s:uname = system("uname")
-        if s:uname == "Darwin\n"
-            set clipboard=unnamed
-            "Mac options here
-        else
-            set clipboard=unnamedplus
-        endif
-    endif
-endif
-
-" expand gnuplot extensions
-au BufNewFile,BufRead *.plt,*.gnuplot setf gnuplot
 
 """"""""""""""""""""""""""
 " Settings of IndentLine "
