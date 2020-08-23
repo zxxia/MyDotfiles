@@ -441,3 +441,4 @@ let g:coc_global_extensions = [
 """"""""""""""""""""""
 let g:vimtex_view_method='skim'
 let g:tex_conceal = ""
+let g:tex_flavor = 'latex'
