@@ -52,13 +52,13 @@ set splitbelow              " More natural split opening, cursor in bottom windo
 set splitright              " More natural split opening, cursor in right window
 let mapleader=' '           " Set space to leader key
 set showcmd
-set wildmenu                " Beeter command completion
+set wildmenu                " Allow command menu for better command completion
 set pastetoggle=<F2>        " Press F2 to turn on paste mode
 set hidden                  " When on a buffer becomes hidden when it is abandoned.
 set hlsearch                " Highlight search results
 set smartcase
 set showmatch               " Show matching parentesis, brackets, and braces
-set mat=2                   " Flash matching pair for 0.2 seconds.
+set matchtime=2                   " Flash matching pair for 0.2 seconds.
 set nowrap
 set nobackup                " Do not create swap files
 set noswapfile
@@ -118,7 +118,7 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-autocmd FileType latex,tex,md,markdown setlocal spell
+autocmd FileType latex,tex,md,markdown,text setlocal spell
 " expand gnuplot extensions
 au BufNewFile,BufRead *.plt,*.gnuplot setf gnuplot
 
@@ -129,10 +129,20 @@ nnoremap <Leader>l :bnext<CR>
 nnoremap <Leader>j :bprevious<CR>
 nnoremap <Leader>k :bnext<CR>
 
-"keep visual mode after indent
+" Keep visual mode after indent
 vnoremap > >gv
 vnoremap < <gv
 
+" Keep pane split when closing a buffer
+nmap <silent> <leader>d :bp\|bd #<CR>
+
+"----------------------------------------------------------------------
+" INSERT 模式下使用 EMACS 键位
+"----------------------------------------------------------------------
+inoremap <c-a> <home>
+inoremap <c-e> <end>
+inoremap <c-d> <del>
+" inoremap <c-_> <c-k>
 
 """"""""""""""""""""""""""
 " Settings of IndentLine "
@@ -245,28 +255,32 @@ set statusline+=%{gutentags#statusline()}
 """"""""""""""""""""""""""""""""
 "     settings of LeaderF      "
 """"""""""""""""""""""""""""""""
-let g:Lf_ShortcutF = '<c-p>'
-" let g:Lf_ShortcutB = '<m-n>'
-" nnoremap <Leader>h :tabprevious<CR>
-noremap <Leader>fm :LeaderfMru<cr>
-noremap <Leader>ff :LeaderfFunction!<cr>
-noremap <Leader>fb :LeaderfBuffer<cr>
-noremap <Leader>ft :LeaderfTag<cr>
-noremap <Leader>ft :LeaderfBufTag<cr>
 let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
-
 let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
 let g:Lf_WorkingDirectoryMode = 'Ac'
 let g:Lf_WindowHeight = 0.30
 let g:Lf_CacheDirectory = expand('~/.vim/cache')
 let g:Lf_ShowRelativePath = 1
-" let g:Lf_HideHelp = 1
+let g:Lf_UseCache = 0
+let g:Lf_HideHelp = 1
 let g:Lf_StlColorscheme = 'powerline'
 let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
 let g:Lf_ShowDevIcons = 0
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
 
+
+let g:Lf_ShortcutF = '<c-p>'
+" let g:Lf_ShortcutB = '<m-n>'
+noremap <Leader>fm :LeaderfMru<cr>
+noremap <Leader>ff :LeaderfFunction!<cr>
+noremap <Leader>fb :LeaderfBuffer<cr>
+noremap <Leader>ft :LeaderfBufTag<cr>
+noremap <Leader>rb :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR>
+noremap <Leader>rf :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
+" search visually selected text literally
+xnoremap <Leader>gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
+noremap <Leader>go :<C-U>Leaderf! rg --recall<CR>
 
 
 """"""""""""""""""""""""""""""""
