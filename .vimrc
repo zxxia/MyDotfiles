@@ -21,7 +21,6 @@ Plug 'crusoexia/vim-monokai'
 Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': { -> mkdp#util#install() } }
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'liuchengxu/vista.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'lervag/vimtex'
@@ -434,6 +433,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
 
+let g:coc_disable_startup_warning = 1
 " coc extentions
 let g:coc_global_extensions = [
   \ 'coc-pairs',
