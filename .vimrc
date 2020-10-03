@@ -147,6 +147,10 @@ inoremap <c-e> <end>
 inoremap <c-d> <del>
 " inoremap <c-_> <c-k>
 
+" command mode easy cursor movement
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+
 " Prevent selecting and pasting from overwriting what you originally copied.
 xnoremap p pgvy
 
