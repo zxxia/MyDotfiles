@@ -68,6 +68,10 @@ set completeopt=longest,menuone
 set undofile                " make undor available after closing files
 set undodir=~/.vim/undodir
 set colorcolumn=80          " Mark characters after line is longer than 80 characters.
+set nostartofline
+set autoread      " Reload files changed outside vim
+" Trigger autoread when changing buffers or coming back to vim in terminal.
+au FocusGained,BufEnter * :silent! !
 highlight ColorColumn ctermbg=lightgrey guibg=white
 syntax enable               " Syntax Highlight
 " set background=light    "设置背景色"
@@ -142,6 +146,15 @@ inoremap <c-a> <home>
 inoremap <c-e> <end>
 inoremap <c-d> <del>
 " inoremap <c-_> <c-k>
+
+" Prevent selecting and pasting from overwriting what you originally copied.
+xnoremap p pgvy
+
+" Keep cursor at the bottom of the visual selection after you yank it.
+vmap y ygv<Esc>
+
+" Auto-resize splits when Vim gets resized.
+autocmd VimResized * wincmd =
 
 """"""""""""""""""""""""""
 " Settings of IndentLine "
@@ -265,8 +278,10 @@ let g:Lf_HideHelp = 1
 let g:Lf_StlColorscheme = 'powerline'
 let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
 let g:Lf_ShowDevIcons = 0
-let g:Lf_WindowPosition = 'popup'
-let g:Lf_PreviewInPopup = 1
+if v:version >= 802
+    let g:Lf_WindowPosition = 'popup'
+    let g:Lf_PreviewInPopup = 0
+endif
 
 
 let g:Lf_ShortcutF = '<c-p>'
