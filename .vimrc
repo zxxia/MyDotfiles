@@ -70,6 +70,7 @@ set undodir=~/.vim/undodir
 set colorcolumn=80          " Mark characters after line is longer than 80 characters.
 set nostartofline
 set autoread      " Reload files changed outside vim
+set ttyfast
 " Trigger autoread when changing buffers or coming back to vim in terminal.
 au FocusGained,BufEnter * :silent! !
 highlight ColorColumn ctermbg=lightgrey guibg=white
@@ -212,11 +213,11 @@ let g:NERDToggleCheckAllLines = 1
 """"""""""""""""""""""
 " Settings of vim-go "
 """"""""""""""""""""""
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_operators = 1
+" let g:go_highlight_types = 1
+" let g:go_highlight_fields = 1
+" let g:go_highlight_functions = 1
+" let g:go_highlight_function_calls = 1
+" let g:go_highlight_operators = 1
 
 
 """""""""""""""""""""""
@@ -282,6 +283,7 @@ let g:Lf_HideHelp = 1
 let g:Lf_StlColorscheme = 'powerline'
 let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
 let g:Lf_ShowDevIcons = 0
+let g:Lf_DefaultExternalTool='rg'
 if v:version >= 802
     let g:Lf_WindowPosition = 'popup'
     let g:Lf_PreviewInPopup = 0
@@ -290,15 +292,30 @@ endif
 
 let g:Lf_ShortcutF = '<c-p>'
 " let g:Lf_ShortcutB = '<m-n>'
+noremap <leader>f :LeaderfSelf<cr>
 noremap <Leader>fm :LeaderfMru<cr>
 noremap <Leader>ff :LeaderfFunction!<cr>
 noremap <Leader>fb :LeaderfBuffer<cr>
 noremap <Leader>ft :LeaderfBufTag<cr>
-noremap <Leader>rb :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR>
-noremap <Leader>rf :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
+noremap <leader>fl :LeaderfLine<cr>
+noremap <leader>fw :LeaderfWindow<cr>
+
+nmap <unique> <leader>fr <Plug>LeaderfRgPrompt
+" nmap <unique> <leader>fra <Plug>LeaderfRgCwordLiteralNoBoundary
+" nmap <unique> <leader>frb <Plug>LeaderfRgCwordLiteralBoundary
+" nmap <unique> <leader>frc <Plug>LeaderfRgCwordRegexNoBoundary
+" nmap <unique> <leader>frd <Plug>LeaderfRgCwordRegexBoundary
+"
+" vmap <unique> <leader>fra <Plug>LeaderfRgVisualLiteralNoBoundary
+" vmap <unique> <leader>frb <Plug>LeaderfRgVisualLiteralBoundary
+" vmap <unique> <leader>frc <Plug>LeaderfRgVisualRegexNoBoundary
+" vmap <unique> <leader>frd <Plug>LeaderfRgVisualRegexBoundary
+
+" noremap <Leader>rb :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR>
+" noremap <Leader>rf :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
 " search visually selected text literally
-xnoremap <Leader>gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
-noremap <Leader>go :<C-U>Leaderf! rg --recall<CR>
+" xnoremap <Leader>gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
+" noremap <Leader>go :<C-U>Leaderf! rg --recall<CR>
 
 
 """"""""""""""""""""""""""""""""
@@ -435,8 +452,10 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
-  else
+  elseif (coc#rpc#ready())
     call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
 " Use `[g` and `]g` to navigate diagnostics
