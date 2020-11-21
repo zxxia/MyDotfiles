@@ -101,7 +101,7 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " Remove trailing whitespace
 if !exists("*StripTrailingWhitespace")
   function StripTrailingWhitespace()
-    if !&binary && &filetype != 'diff' && &filetype != 'markdown' && &filetype != 'csv' && &filetype != 'tex' && &filetype != 'txt'
+    if !&binary && &filetype != 'diff' && &filetype != 'markdown' && &filetype != 'csv' && &filetype != 'txt'
       normal mz
       normal Hmy
       %s/\s\+$//e
