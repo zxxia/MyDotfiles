@@ -518,7 +518,7 @@ let g:coc_global_extensions = [
   \ 'coc-pairs',
   \ 'coc-json',
   \ 'coc-lists',
-  \ 'coc-python',
+  \ 'coc-pyright',
   \ 'coc-tag',
   \ 'coc-highlight',
   \ 'coc-html',
@@ -527,6 +527,8 @@ let g:coc_global_extensions = [
   \ 'coc-snippets',
   \ 'coc-git',
   \ ]
+
+  " \ 'coc-python',
 autocmd FileType tex let b:coc_pairs = [["$", "$"]]
 
 
