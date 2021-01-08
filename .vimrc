@@ -25,6 +25,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'lervag/vimtex'
+Plug 'pangloss/vim-javascript'
 call plug#end()
 
 
