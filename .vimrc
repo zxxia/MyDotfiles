@@ -23,7 +23,7 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'lervag/vimtex'
 Plug 'pangloss/vim-javascript'
 call plug#end()
@@ -181,6 +181,9 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 map <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeWinSize=25
 let NERDTreeQuitOnOpen = 0
+" If another buffer tries to replace NERDTree, put in the other window, and bring back NERDTree.
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
 
 
@@ -529,8 +532,11 @@ let g:coc_global_extensions = [
   \ 'coc-git',
   \ ]
 
-  " \ 'coc-python',
 autocmd FileType tex let b:coc_pairs = [["$", "$"]]
+" Disable file with size > 1MB
+autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
+            \ let b:coc_enabled=0 |
+            \ endif
 
 
 """"""""""""""""""""""
@@ -573,3 +579,7 @@ if has('unix')
 elseif has('win32')
 
 endif
+" c++ syntax highlighting
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
