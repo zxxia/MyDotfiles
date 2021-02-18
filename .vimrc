@@ -72,7 +72,9 @@ set undodir=~/.vim/undodir
 set colorcolumn=80          " Mark characters after line is longer than 80 characters.
 set nostartofline
 set autoread      " Reload files changed outside vim
-set ttyfast
+if !has('nvim')
+    set ttyfast
+endif
 " Trigger autoread when changing buffers or coming back to vim in terminal.
 au FocusGained,BufEnter * :silent! !
 highlight ColorColumn ctermbg=lightgrey guibg=white
@@ -179,7 +181,7 @@ let g:indentLine_fileTypeExclude = ['markdown', 'json', 'latex', 'tex', 'csv']
 " close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 map <C-n> :NERDTreeToggle<CR>
-let g:NERDTreeWinSize=25
+let g:NERDTreeWinSize=35
 let NERDTreeQuitOnOpen = 0
 " If another buffer tries to replace NERDTree, put in the other window, and bring back NERDTree.
 autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
