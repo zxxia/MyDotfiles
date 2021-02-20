@@ -9,6 +9,7 @@
     ],
     "coc.preferences.useQuickfixForLocations": true,
     "python.linting.enabled": false,
+    "highlight.disableLanguages": ["", "json", "csv", "txt", "conf"],
     "languageserver": {
         "ccls": {
             "command": "ccls",
