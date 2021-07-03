@@ -11,7 +11,7 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'Yggdroot/indentLine'
 " Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoUpdateBinaries'}
-Plug 'scrooloose/nerdtree'
+" Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-airline/vim-airline'
@@ -179,13 +179,13 @@ let g:indentLine_fileTypeExclude = ['markdown', 'json', 'latex', 'tex', 'csv']
 " open a NERDTree automatically when vim starts up
 "autocmd vimenter * NERDTree
 " close vim if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-map <C-n> :NERDTreeToggle<CR>
-let g:NERDTreeWinSize=35
-let NERDTreeQuitOnOpen = 0
-" If another buffer tries to replace NERDTree, put in the other window, and bring back NERDTree.
-autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
-    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" map <C-n> :NERDTreeToggle<CR>
+" let g:NERDTreeWinSize=35
+" let NERDTreeQuitOnOpen = 0
+" " If another buffer tries to replace NERDTree, put in the other window, and bring back NERDTree.
+" autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+"     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
 
 
@@ -532,6 +532,7 @@ let g:coc_global_extensions = [
   \ 'coc-vimtex',
   \ 'coc-snippets',
   \ 'coc-git',
+  \ 'coc-explorer',
   \ ]
 
 autocmd FileType tex let b:coc_pairs = [["$", "$"]]
@@ -539,6 +540,7 @@ autocmd FileType tex let b:coc_pairs = [["$", "$"]]
 autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
             \ let b:coc_enabled=0 |
             \ endif
+nnoremap <C-n> :CocCommand explorer<CR>
 
 
 """"""""""""""""""""""
