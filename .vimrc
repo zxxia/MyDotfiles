@@ -165,6 +165,10 @@ vmap y ygv<Esc>
 " Auto-resize splits when Vim gets resized.
 autocmd VimResized * wincmd =
 
+if has('nvim-0.5.0')
+  au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
+endif
+
 """"""""""""""""""""""""""
 " Settings of IndentLine "
 """"""""""""""""""""""""""
@@ -285,7 +289,7 @@ let g:Lf_WorkingDirectoryMode = 'Ac'
 let g:Lf_WindowHeight = 0.30
 let g:Lf_CacheDirectory = expand('~/.vim/cache')
 let g:Lf_ShowRelativePath = 1
-let g:Lf_UseCache = 0
+let g:Lf_UseCache = 1
 let g:Lf_HideHelp = 1
 let g:Lf_StlColorscheme = 'powerline'
 let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
