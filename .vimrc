@@ -130,6 +130,14 @@ nnoremap <C-H> <C-W><C-H>
 " expand gnuplot extensions
 au BufNewFile,BufRead *.plt,*.gnuplot setf gnuplot
 
+" undo break points
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
+
+" Consistent with C and D
+nnoremap Y y$
 
 " Easy navigation among tabs
 nnoremap <Leader>h :bprevious<CR>
