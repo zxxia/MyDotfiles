@@ -177,6 +177,8 @@ if has('nvim-0.5.0')
   au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
 endif
 
+" let g:python3_host_prog = '/Users/zxxia/.virtualenvs/nvim/bin/python3.9'
+
 """"""""""""""""""""""""""
 " Settings of IndentLine "
 """"""""""""""""""""""""""
@@ -459,7 +461,7 @@ endfunction
 
 
 " Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" autocmd CursorHold * silent call CocActionAsync('highlight')
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
