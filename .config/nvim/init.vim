@@ -15,7 +15,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-python/python-syntax', {'for': 'python'}
 Plug 'crusoexia/vim-monokai'
 " Plug 'ludovicchabant/vim-gutentags'
-Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': { -> mkdp#util#install() } }
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-fugitive'

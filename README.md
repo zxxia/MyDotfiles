@@ -1,4 +1,13 @@
 # My Dotfiles
 
-- .vimrc
-- .tmux.conf
+## Installation
+
+```bash
+stow .
+```
+
+## Uninstallation
+
+```bash
+stow -d .
+```
