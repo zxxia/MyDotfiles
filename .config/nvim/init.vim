@@ -67,7 +67,7 @@ set undofile                " make undor available after closing files
 set colorcolumn=80          " Mark characters after line is longer than 80 characters.
 set nostartofline
 set autoread      " Reload files changed outside vim
-set termguicolors
+" set termguicolors
 set tags=./.tags;,.tags
 " Trigger autoread when changing buffers or coming back to vim in terminal.
 au FocusGained,BufEnter * :silent! !
