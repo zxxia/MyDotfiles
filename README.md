@@ -9,5 +9,5 @@ stow .
 ## Uninstallation
 
 ```bash
-stow -d .
+stow -D .
 ```
