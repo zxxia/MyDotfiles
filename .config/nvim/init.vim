@@ -8,7 +8,7 @@ endif
 
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'Yggdroot/indentLine'
-" Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-airline/vim-airline'
