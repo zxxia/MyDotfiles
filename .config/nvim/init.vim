@@ -12,7 +12,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-airline/vim-airline'
-Plug 'crusoexia/vim-monokai'
+" Plug 'crusoexia/vim-monokai'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'tpope/vim-fugitive'
@@ -27,7 +27,12 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+" Plug 'joshdick/onedark.vim'
+" Plug 'tanvirtin/monokai.nvim'
+Plug 'dracula/vim', { 'as': 'dracula' }
 call plug#end()
+
 
 
 """"""""""""""""""""""""""
@@ -71,15 +76,15 @@ set undofile                " make undor available after closing files
 set colorcolumn=80          " Mark characters after line is longer than 80 characters.
 set nostartofline
 set autoread      " Reload files changed outside vim
-" set termguicolors
+set termguicolors
 set tags=./.tags;,.tags
 " Trigger autoread when changing buffers or coming back to vim in terminal.
 au FocusGained,BufEnter * :silent! !
-highlight ColorColumn ctermbg=lightgrey guibg=white
-syntax enable               " Syntax Highlight
-" set background=light    "设置背景色"
-colorscheme monokai
-" colorscheme default "solarized
+syntax on               " Syntax Highlight
+" colorscheme monokai
+" colorscheme onedark
+colorscheme dracula
+
 if has("win32")
   "Windows options here
 else
