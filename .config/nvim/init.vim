@@ -12,6 +12,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 " Plug 'crusoexia/vim-monokai'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
@@ -28,9 +29,7 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-" Plug 'joshdick/onedark.vim'
-" Plug 'tanvirtin/monokai.nvim'
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'tanvirtin/monokai.nvim'
 call plug#end()
 
 
@@ -78,12 +77,11 @@ set nostartofline
 set autoread      " Reload files changed outside vim
 set termguicolors
 set tags=./.tags;,.tags
+set signcolumn=yes
 " Trigger autoread when changing buffers or coming back to vim in terminal.
 au FocusGained,BufEnter * :silent! !
 syntax on               " Syntax Highlight
-" colorscheme monokai
-" colorscheme onedark
-colorscheme dracula
+colorscheme monokai
 
 if has("win32")
   "Windows options here
