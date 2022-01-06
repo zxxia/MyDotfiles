@@ -1,5 +1,8 @@
 lua <<EOF
-local lsp_installer = require("nvim-lsp-installer")
+local lsp_installer_status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
+if not lsp_installer_status_ok then
+  return
+end
 -- Include the servers you want to have installed by default below
 local servers = {
   "bashls",
@@ -49,7 +52,10 @@ end
 
 
 -- Setup nvim-cmp.
-local cmp = require'cmp'
+local cmp_status_ok, cmp = pcall(require, "cmp")
+if not cmp_status_ok then
+  return
+end
 local kind_icons = {
   Text = "",
   Method = "",
@@ -144,7 +150,12 @@ cmp.setup.cmdline(':', {
 })
 
 -- Setup lspconfig.
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local cmp_nvim_lsp_status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+if not cmp_nvim_lsp_status_ok then
+  return
+end
+
+local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- Register a handler that will be called for all installed servers.
 -- Alternatively, you may also register handlers on specific server instances instead (see example below).
