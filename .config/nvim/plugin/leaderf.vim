@@ -16,6 +16,7 @@ if v:version >= 802
     let g:Lf_PreviewInPopup = 0
 endif
 
+let g:Lf_RgConfig = ["--max-columns=150"]
 
 let g:Lf_ShortcutF = '<c-p>'
 " let g:Lf_ShortcutB = '<m-n>'
