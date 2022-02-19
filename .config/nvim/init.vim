@@ -8,12 +8,14 @@ endif
 
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'Yggdroot/indentLine'
-Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
+
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua'
+
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" Plug 'crusoexia/vim-monokai'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 Plug 'tpope/vim-fugitive'
@@ -175,9 +177,7 @@ vmap y ygv<Esc>
 " Auto-resize splits when Vim gets resized.
 autocmd VimResized * wincmd =
 
-if has('nvim-0.5.0')
-  au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
-endif
+autocmd TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
 
 " assume virtualenvwrapper is used and nvim is the virtualenv for neovim
 let g:python3_host_prog = expand("$WORKON_HOME/nvim/bin/python3.9")
