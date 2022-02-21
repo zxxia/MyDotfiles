@@ -13,6 +13,8 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 
+Plug 'jose-elias-alvarez/null-ls.nvim'
+
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -174,10 +176,16 @@ xnoremap p pgvy
 " Keep cursor at the bottom of the visual selection after you yank it.
 vmap y ygv<Esc>
 
+" Fugitive conflict resolution
+" diffget from HEAD
+nnoremap dgh :diffget //2<CR>
+" diffget from merge branch
+nnoremap dgl :diffget //3<CR>
+
 " Auto-resize splits when Vim gets resized.
 autocmd VimResized * wincmd =
 
 autocmd TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
 
 " assume virtualenvwrapper is used and nvim is the virtualenv for neovim
-let g:python3_host_prog = expand("$WORKON_HOME/nvim/bin/python3.9")
+let g:python3_host_prog = expand("$WORKON_HOME/nvim/bin/python")
