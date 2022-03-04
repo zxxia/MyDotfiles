@@ -13,6 +13,8 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 
+Plug 'L3MON4D3/LuaSnip'
+
 Plug 'jose-elias-alvarez/null-ls.nvim'
 
 Plug 'christoomey/vim-tmux-navigator'
@@ -169,6 +171,9 @@ inoremap <c-d> <del>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <c-d> <del>
+
+" select the highlighted item when pop-up menu is visible in command mode
+cnoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 
 " Prevent selecting and pasting from overwriting what you originally copied.
 xnoremap p pgvy
