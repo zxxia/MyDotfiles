@@ -186,6 +186,8 @@ vmap y ygv<Esc>
 nnoremap dgh :diffget //2<CR>
 " diffget from merge branch
 nnoremap dgl :diffget //3<CR>
+" stop Q triggering Ex mode
+nnoremap Q <Nop>
 
 " Auto-resize splits when Vim gets resized.
 autocmd VimResized * wincmd =
