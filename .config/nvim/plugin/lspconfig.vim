@@ -1,4 +1,10 @@
 lua <<EOF
+
+local snip_status_ok, luasnip = pcall(require, "luasnip")
+if not snip_status_ok then
+  return
+end
+
 local lsp_installer_status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
 if not lsp_installer_status_ok then
   return
@@ -102,8 +108,8 @@ cmp.setup({
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
       -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-      -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-      vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+      require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
       -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
     end,
   },
@@ -115,18 +121,46 @@ cmp.setup({
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
     }),
-    ['<CR>'] = cmp.mapping.confirm({ select = false }),
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      --elseif luasnip.expand_or_jumpable() then
-        --luasnip.expand_or_jump()
-      elseif has_words_before() then
-        cmp.complete()
-      else
-        fallback()
-      end
-    end, { "i", "c", "s"}),
+    -- ['<CR>'] = cmp.mapping.confirm({ select = false }),
+     ['<CR>'] = cmp.mapping({
+             i = cmp.mapping.confirm({ select = false }),
+             -- c = cmp.mapping.confirm({ select = false }),
+             -- c = function(fallback)
+             --     if cmp.visible() then
+             --         -- print('here')
+             --         cmp.confirm({  select = false })
+             --         -- cmp.mapping.confirm({ select = false })
+             --         -- cmp.close()
+             --     else
+             --         fallback()
+             --     end
+             -- end
+         }),
+     ['<Tab>'] = cmp.mapping(function(fallback)
+       if cmp.visible() then
+         cmp.select_next_item()
+       --elseif luasnip.expand_or_jumpable() then
+         --luasnip.expand_or_jump()
+       elseif has_words_before() then
+         cmp.complete()
+       else
+         fallback()
+       end
+     end, { "i", "s"}),
+    -- ['<Tab>'] = cmp.mapping({
+    -- i = function(fallback)
+    --       if cmp.visible() then
+    --           cmp.select_next_item()
+    --       elseif luasnip.expandable() then
+    --         luasnip.expand()
+    --       elseif luasnip.expand_or_jumpable() then
+    --         luasnip.expand_or_jump()
+    --       elseif has_words_before() then
+    --         cmp.complete()
+    --       else
+    --         fallback()
+    --       end
+    -- end}),
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
@@ -135,7 +169,7 @@ cmp.setup({
       else
         fallback()
       end
-    end, { "i", "c", "s" }),
+    end, { "i", "s" }),
   },
 
   formatting = {
@@ -172,14 +206,14 @@ cmp.setup({
 -- })
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(':', {
-  completion = { autocomplete = false },
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  })
-})
+-- cmp.setup.cmdline(':', {
+--   completion = { autocomplete = false },
+--   sources = cmp.config.sources({
+--     { name = 'path' }
+--   }, {
+--     { name = 'cmdline' }
+--   })
+-- })
 
 -- Setup lspconfig.
 local cmp_nvim_lsp_status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')

@@ -194,5 +194,8 @@ autocmd VimResized * wincmd =
 
 autocmd TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
 
+
+autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
+
 " assume virtualenvwrapper is used and nvim is the virtualenv for neovim
 let g:python3_host_prog = expand("$WORKON_HOME/nvim/bin/python")
