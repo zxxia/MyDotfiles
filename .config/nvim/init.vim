@@ -8,22 +8,39 @@ endif
 
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'Yggdroot/indentLine'
-" Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
+
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua'
+
+Plug 'L3MON4D3/LuaSnip'
+
+Plug 'jose-elias-alvarez/null-ls.nvim'
+
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-python/python-syntax', {'for': 'python'}
-Plug 'crusoexia/vim-monokai'
-" Plug 'ludovicchabant/vim-gutentags'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'lervag/vimtex'
-Plug 'pangloss/vim-javascript'
+
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'tanvirtin/monokai.nvim'
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'lewis6991/gitsigns.nvim'
 call plug#end()
+
 
 
 """"""""""""""""""""""""""
@@ -67,15 +84,14 @@ set undofile                " make undor available after closing files
 set colorcolumn=80          " Mark characters after line is longer than 80 characters.
 set nostartofline
 set autoread      " Reload files changed outside vim
-" set termguicolors
+set termguicolors
 set tags=./.tags;,.tags
+set signcolumn=yes
 " Trigger autoread when changing buffers or coming back to vim in terminal.
 au FocusGained,BufEnter * :silent! !
-highlight ColorColumn ctermbg=lightgrey guibg=white
-syntax enable               " Syntax Highlight
-" set background=light    "设置背景色"
+syntax on               " Syntax Highlight
 colorscheme monokai
-" colorscheme default "solarized
+
 if has("win32")
   "Windows options here
 else
@@ -156,18 +172,30 @@ cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <c-d> <del>
 
+" select the highlighted item when pop-up menu is visible in command mode
+cnoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+
 " Prevent selecting and pasting from overwriting what you originally copied.
 xnoremap p pgvy
 
 " Keep cursor at the bottom of the visual selection after you yank it.
 vmap y ygv<Esc>
 
+" Fugitive conflict resolution
+" diffget from HEAD
+nnoremap dgh :diffget //2<CR>
+" diffget from merge branch
+nnoremap dgl :diffget //3<CR>
+" stop Q triggering Ex mode
+nnoremap Q <Nop>
+
 " Auto-resize splits when Vim gets resized.
 autocmd VimResized * wincmd =
 
-if has('nvim-0.5.0')
-  au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
-endif
+autocmd TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
+
+
+autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
 
 " assume virtualenvwrapper is used and nvim is the virtualenv for neovim
-let g:python3_host_prog = expand("$WORKON_HOME/nvim/bin/python3.9")
+let g:python3_host_prog = expand("$WORKON_HOME/nvim/bin/python")
