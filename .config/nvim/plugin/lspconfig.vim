@@ -1,30 +1,5 @@
 lua <<EOF
 
-local snip_status_ok, luasnip = pcall(require, "luasnip")
-if not snip_status_ok then
-  return
-end
-
-local lsp_installer_status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
-if not lsp_installer_status_ok then
-  return
-end
--- Include the servers you want to have installed by default below
-local servers = {
-  "bashls",
-  "pyright",
-}
-
-for _, name in pairs(servers) do
-  local server_is_found, server = lsp_installer.get_server(name)
-  if server_is_found then
-    if not server:is_installed() then
-      print("Installing " .. name)
-      server:install()
-    end
-  end
-end
-
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -56,13 +31,45 @@ local on_attach = function(client, bufnr)
 
 end
 
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+require("mason").setup()
+mason_lspconfig = require("mason-lspconfig")
+mason_lspconfig.setup {
+    ensure_installed = { "pyright" }
+}
+
+mason_lspconfig.setup_handlers({
+    -- The first entry (without a key) will be the default handler
+    -- and will be called for each installed server that doesn't have
+    -- a dedicated handler.
+    function (server_name) -- default handler (optional)
+        require("lspconfig")[server_name].setup {
+            on_attach = on_attach,
+            capabilities = capabilities
+        }
+    end,
+    -- Next, you can provide targeted overrides for specific servers.
+    -- ["rust_analyzer"] = function ()
+    --     require("rust-tools").setup {}
+    -- end,
+    -- ["sumneko_lua"] = function ()
+    --     lspconfig.sumneko_lua.setup {
+    --         settings = {
+    --             Lua = {
+    --                 diagnostics = {
+    --                     globals = { "vim" }
+    --                 }
+    --             }
+    --         }
+    --     }
+    -- end,
+})
 
 
+local luasnip = require("luasnip")
 -- Setup nvim-cmp.
-local cmp_status_ok, cmp = pcall(require, "cmp")
-if not cmp_status_ok then
-  return
-end
+local cmp = require("cmp")
 local check_backspace = function()
   local col = vim.fn.col "." - 1
   return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
@@ -72,8 +79,6 @@ local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
-
--- local luasnip = require("luasnip")
 
 local kind_icons = {
   Text = "",
@@ -108,7 +113,7 @@ cmp.setup({
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
       -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-      require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+      luasnip.lsp_expand(args.body) -- For `luasnip` users.
       -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
       -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
     end,
@@ -198,6 +203,7 @@ cmp.setup({
 
   }
 })
+
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 -- cmp.setup.cmdline('/', {
 --   sources = {
@@ -215,34 +221,6 @@ cmp.setup({
 --   })
 -- })
 
--- Setup lspconfig.
-local cmp_nvim_lsp_status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
-if not cmp_nvim_lsp_status_ok then
-  return
-end
-
-local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
-
--- Register a handler that will be called for all installed servers.
--- Alternatively, you may also register handlers on specific server instances instead (see example below).
-lsp_installer.on_server_ready(function(server)
-    local opts = {
-        on_attach = on_attach,
-        flags = {
-            debounce_text_changes = 150,
-        },
-        capabilities = capabilities
-    }
-
-    -- (optional) Customize the options passed to the server
-    -- if server.name == "tsserver" then
-    --     opts.root_dir = function() ... end
-    -- end
-
-    -- This setup() function is exactly the same as lspconfig's setup function.
-    -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-    server:setup(opts)
-end)
 
 vim.diagnostic.config({
   virtual_text = false,
