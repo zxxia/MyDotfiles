@@ -136,8 +136,6 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " autocmd FileType latex,tex,md,markdown,text setlocal spell
-" expand gnuplot extensions
-au BufNewFile,BufRead *.plt,*.gnuplot setf gnuplot
 
 " undo break points
 inoremap , ,<c-g>u
