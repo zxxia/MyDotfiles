@@ -3,3 +3,6 @@
 	name = Zhengxu Xia
 [core]
 	editor = nvim
+
+[merge]
+    conflictstyle = diff3
