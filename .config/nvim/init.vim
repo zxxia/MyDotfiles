@@ -87,8 +87,6 @@ set autoread      " Reload files changed outside vim
 set termguicolors
 set tags=./.tags;,.tags
 set signcolumn=yes
-" Trigger autoread when changing buffers or coming back to vim in terminal.
-au FocusGained,BufEnter * :silent! !
 syntax on               " Syntax Highlight
 colorscheme monokai
 
@@ -107,26 +105,25 @@ else
     endif
 endif
 
-" Make cursor to stay at the place where it was at previous file exit when opening the file
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+" Trigger autoread when changing buffers or coming back to vim in terminal.
+autocmd FocusGained,BufEnter * :silent! !
 
+" Make cursor to stay at the place where it was at previous file exit when opening the file
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 " Remove trailing whitespace
-if !exists("*StripTrailingWhitespace")
-  function StripTrailingWhitespace()
-    if !&binary && &filetype != 'diff' && &filetype != 'markdown' && &filetype != 'csv' && &filetype != 'txt'
-      normal mz
-      normal Hmy
-      %s/\s\+$//e
-      normal 'yz<CR>
-      normal `z
-    endif
-  endfunction
-endif
-autocmd FileWritePre    * :call StripTrailingWhitespace()
-autocmd FileAppendPre   * :call StripTrailingWhitespace()
-autocmd FilterWritePre  * :call StripTrailingWhitespace()
-autocmd BufWritePre     * :call StripTrailingWhitespace()
+autocmd FileWritePre    * :call strip_trailing_spaces#StripTrailingWhitespace()
+autocmd FileAppendPre   * :call strip_trailing_spaces#StripTrailingWhitespace()
+autocmd FilterWritePre  * :call strip_trailing_spaces#StripTrailingWhitespace()
+autocmd BufWritePre     * :call strip_trailing_spaces#StripTrailingWhitespace()
+
+
+" Auto-resize splits when Vim gets resized.
+autocmd VimResized * wincmd =
+
+autocmd TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
+
+autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
 
 
 " Easier split navigations
@@ -186,14 +183,5 @@ nnoremap dgh :diffget //2<CR>
 nnoremap dgl :diffget //3<CR>
 " stop Q triggering Ex mode
 nnoremap Q <Nop>
-
-" Auto-resize splits when Vim gets resized.
-autocmd VimResized * wincmd =
-
-autocmd TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
-
-
-autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
-
 " assume virtualenvwrapper is used and nvim is the virtualenv for neovim
 let g:python3_host_prog = expand("$WORKON_HOME/nvim/bin/python")
