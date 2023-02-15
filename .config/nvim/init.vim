@@ -185,3 +185,9 @@ nnoremap dgl :diffget //3<CR>
 nnoremap Q <Nop>
 " assume virtualenvwrapper is used and nvim is the virtualenv for neovim
 let g:python3_host_prog = expand("$WORKON_HOME/nvim/bin/python")
+
+lua <<EOF
+vim.diagnostic.config({
+  virtual_text = false,
+})
+EOF
