@@ -6,3 +6,8 @@
 
 [merge]
     conflictstyle = diff3
+
+; git config oh-my-zsh.hide-info 1
+[oh-my-zsh]
+    hide-info = 1
+    hide-dirty = 1
