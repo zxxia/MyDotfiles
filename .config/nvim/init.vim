@@ -186,6 +186,8 @@ nnoremap Q <Nop>
 " assume virtualenvwrapper is used and nvim is the virtualenv for neovim
 let g:python3_host_prog = expand("$WORKON_HOME/nvim/bin/python")
 
+command -nargs=0 -range SortLine <line1>,<line2>call setline('.',join(sort(split(getline('.'),' ')),' '))
+
 lua <<EOF
 vim.diagnostic.config({
   virtual_text = false,
