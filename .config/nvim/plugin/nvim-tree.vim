@@ -1,6 +1,7 @@
 lua <<EOF
 local nvim_tree_status_ok, nvim_tree = pcall(require, 'nvim-tree')
 if not nvim_tree_status_ok then
+    print("Warning: nvim-tree not available, skipping configuration.")
   return
 end
 

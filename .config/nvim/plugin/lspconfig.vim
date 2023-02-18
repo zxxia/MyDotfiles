@@ -220,9 +220,4 @@ cmp.setup({
 --     { name = 'cmdline' }
 --   })
 -- })
-
-
--- vim.diagnostic.config({
---   virtual_text = false,
--- })
 EOF
