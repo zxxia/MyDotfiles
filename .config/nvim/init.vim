@@ -35,10 +35,10 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'tanvirtin/monokai.nvim'
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'lewis6991/gitsigns.nvim'
+Plug 'cpea2506/one_monokai.nvim'
 call plug#end()
 
 
@@ -88,7 +88,8 @@ set termguicolors
 set tags=./.tags;,.tags
 set signcolumn=yes
 syntax on               " Syntax Highlight
-colorscheme monokai
+" colorscheme monokai
+colorscheme one_monokai
 
 if has("win32")
   "Windows options here
