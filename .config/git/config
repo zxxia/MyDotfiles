@@ -1,8 +1,8 @@
 [user]
-	email = zxxia@uchicago.edu
-	name = Zhengxu Xia
+    email = zxxia@uchicago.edu
+    name = Zhengxu Xia
 [core]
-	editor = nvim
+    editor = nvim
 
 [merge]
     conflictstyle = diff3
