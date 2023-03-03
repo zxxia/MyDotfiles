@@ -172,8 +172,13 @@ cmp.setup({
     -- { name = 'luasnip' }, -- For luasnip users.
     { name = 'ultisnips' }, -- For ultisnips users.
     { name = 'buffer' },
-    { name = 'path' }
-
+    { name = 'path',
+      option = {
+        get_cwd = function()
+            return vim.fn.getcwd()
+        end
+      }
+    }
   }
 })
 EOF
