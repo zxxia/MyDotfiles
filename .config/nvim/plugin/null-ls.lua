@@ -1,4 +1,3 @@
-lua <<EOF
 local null_ls_status_ok, null_ls = pcall(require, "null-ls")
 if not null_ls_status_ok then
     print("Warning: null-ls not available, skipping configuration.")
@@ -16,4 +15,3 @@ null_ls.setup {
     formatting.black.with { extra_args = { "--fast", "-l 80"} },
   },
 }
-EOF

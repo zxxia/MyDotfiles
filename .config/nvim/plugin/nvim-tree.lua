@@ -1,4 +1,3 @@
-lua <<EOF
 local nvim_tree_status_ok, nvim_tree = pcall(require, 'nvim-tree')
 if not nvim_tree_status_ok then
     print("Warning: nvim-tree not available, skipping configuration.")
@@ -122,4 +121,3 @@ require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
 local keymap = vim.api.nvim_set_keymap
 local opt = {noremap = true, silent = true}
 keymap("n", "<C-n>", ":NvimTreeToggle<cr>", opt)
-EOF

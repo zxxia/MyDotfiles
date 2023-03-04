@@ -1,5 +1,3 @@
-lua <<EOF
-
 local telescope_status_ok, telescope = pcall(require, 'telescope')
 if not telescope_status_ok then
     print("Warning: telescope not available, skipping configuration.")
@@ -36,5 +34,3 @@ vim.keymap.set('n', '<C-P>', function()
         builtin.find_files()
     end
 end)
-
-EOF

@@ -1,4 +1,3 @@
-lua <<EOF
 local treesitter_status_ok, treesitter = pcall(require, 'nvim-treesitter')
 if not treesitter_status_ok then
   return
@@ -35,4 +34,3 @@ require('nvim-treesitter.configs').setup {
     additional_vim_regex_highlighting = false,
   },
 }
-EOF
