@@ -1,5 +1,6 @@
 local treesitter_status_ok, treesitter = pcall(require, 'nvim-treesitter')
 if not treesitter_status_ok then
+  print("Warning: nvim-treesitter not available, skipping configuration.")
   return
 end
 
