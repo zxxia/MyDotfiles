@@ -13,7 +13,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 
-Plug 'L3MON4D3/LuaSnip'
+Plug 'L3MON4D3/LuaSnip', {'tag': 'v<CurrentMajor>.*'}  " , 'do': 'make install_jsregexp'}
 
 Plug 'jose-elias-alvarez/null-ls.nvim'
 
