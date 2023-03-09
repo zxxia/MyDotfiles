@@ -13,7 +13,8 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 
-Plug 'L3MON4D3/LuaSnip', {'tag': 'v<CurrentMajor>.*'}  " , 'do': 'make install_jsregexp'}
+Plug 'L3MON4D3/LuaSnip'
+" , {'tag': 'v1.2.*'}  " , 'do': 'make install_jsregexp'}
 
 Plug 'jose-elias-alvarez/null-ls.nvim'
 
@@ -134,14 +135,6 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" autocmd FileType latex,tex,md,markdown,text setlocal spell
-
-" undo break points
-inoremap , ,<c-g>u
-inoremap . .<c-g>u
-inoremap ! !<c-g>u
-inoremap ? ?<c-g>u
-
 " Consistent with C and D
 nnoremap Y y$
 
@@ -149,12 +142,26 @@ nnoremap Y y$
 nnoremap <Leader>h :bprevious<CR>
 nnoremap <Leader>l :bnext<CR>
 
-" Keep visual mode after indent
-vnoremap > >gv
-vnoremap < <gv
+" Fugitive conflict resolution
+" diffget from HEAD
+nnoremap dgh :diffget //2<CR>
+" diffget from merge branch
+nnoremap dgl :diffget //3<CR>
+" stop Q triggering Ex mode
+nnoremap Q <Nop>
 
 " Keep pane split when closing a buffer
-nmap <silent> <leader>d :bp\|bd #<CR>
+nnoremap <silent> <leader>d :bp\|bd #<CR>
+
+" Map :nohl backspace
+" nnoremap <Backspace> :noh <CR>
+nnoremap <expr> <BS> v:hlsearch?':noh<cr>':'<BS>'
+
+" undo break points
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
 
 "----------------------------------------------------------------------
 " INSERT 模式下使用 EMACS 键位
@@ -172,19 +179,17 @@ cnoremap <c-d> <del>
 " select the highlighted item when pop-up menu is visible in command mode
 cnoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 
+" Keep cursor at the bottom of the visual selection after you yank it.
+vnoremap y ygv<Esc>
+
+" Keep visual mode after indent
+vnoremap > >gv
+vnoremap < <gv
+
 " Prevent selecting and pasting from overwriting what you originally copied.
 xnoremap p pgvy
 
-" Keep cursor at the bottom of the visual selection after you yank it.
-vmap y ygv<Esc>
 
-" Fugitive conflict resolution
-" diffget from HEAD
-nnoremap dgh :diffget //2<CR>
-" diffget from merge branch
-nnoremap dgl :diffget //3<CR>
-" stop Q triggering Ex mode
-nnoremap Q <Nop>
 " assume virtualenvwrapper is used and nvim is the virtualenv for neovim
 let g:python3_host_prog = expand("$WORKON_HOME/nvim/bin/python")
 
