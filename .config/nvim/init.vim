@@ -69,6 +69,7 @@ set splitright              " More natural split opening, cursor in right window
 let mapleader=' '           " Set space to leader key
 set showcmd
 set wildmenu                " Allow command menu for better command completion
+set wildmode=longest:full,full
 set pastetoggle=<F2>        " Press F2 to turn on paste mode
 set hidden                  " When on a buffer becomes hidden when it is abandoned.
 set hlsearch                " Highlight search results
@@ -178,6 +179,10 @@ cnoremap <c-d> <del>
 
 " select the highlighted item when pop-up menu is visible in command mode
 cnoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+
+" <Left> and <Right> to move the cursor instead of selecting a different match
+cnoremap <Left> <Space><BS><Left>
+cnoremap <Right> <Space><BS><Right>
 
 " Keep cursor at the bottom of the visual selection after you yank it.
 vnoremap y ygv<Esc>
