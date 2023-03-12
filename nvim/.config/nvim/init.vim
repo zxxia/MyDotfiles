@@ -194,6 +194,8 @@ vnoremap < <gv
 " Prevent selecting and pasting from overwriting what you originally copied.
 xnoremap p pgvy
 
+" Escape terminal mode
+tnoremap <leader><Esc> <C-\><C-n>
 
 " assume virtualenvwrapper is used and nvim is the virtualenv for neovim
 let g:python3_host_prog = expand("$WORKON_HOME/nvim/bin/python")
