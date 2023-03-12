@@ -3,23 +3,24 @@
 ## Installation
 
 ```bash
-stow .
+stow nvim
 ```
 
 ## Uninstallation
 
 ```bash
-stow -D .
+stow -D nvim
 ```
 
 ## Dependency
-stow
-git
-curl
-gcc
-g++
-make
-universal-ctags
-node.js
-npm
-ripgrep
+- stow
+- git
+- curl
+- gcc
+- g++
+- make
+- universal-ctags
+- node.js
+- npm
+- ripgrep
+- xclip
