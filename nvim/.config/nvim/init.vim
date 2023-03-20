@@ -157,7 +157,6 @@ nnoremap Q <Nop>
 nnoremap <silent> <leader>d :bp\|bd #<CR>
 
 " Map :nohl backspace
-" nnoremap <Backspace> :noh <CR>
 nnoremap <expr> <BS> v:hlsearch?':noh<cr>':'<BS>'
 
 " undo break points
@@ -209,4 +208,3 @@ vim.diagnostic.config({
   virtual_text = false,
 })
 EOF
-" colorscheme monokai-pro
