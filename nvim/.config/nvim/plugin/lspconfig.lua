@@ -32,34 +32,34 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protoc
 require("mason").setup()
 mason_lspconfig = require("mason-lspconfig")
 mason_lspconfig.setup {
-    ensure_installed = { "pyright" }
+  ensure_installed = { "pyright" }
 }
 
 mason_lspconfig.setup_handlers({
-    -- The first entry (without a key) will be the default handler
-    -- and will be called for each installed server that doesn't have
-    -- a dedicated handler.
-    function (server_name) -- default handler (optional)
-        require("lspconfig")[server_name].setup {
-            on_attach = on_attach,
-            capabilities = capabilities
-        }
-    end,
-    -- Next, you can provide targeted overrides for specific servers.
-    -- ["rust_analyzer"] = function ()
-    --     require("rust-tools").setup {}
-    -- end,
-    -- ["sumneko_lua"] = function ()
-    --     lspconfig.sumneko_lua.setup {
-    --         settings = {
-    --             Lua = {
-    --                 diagnostics = {
-    --                     globals = { "vim" }
-    --                 }
-    --             }
-    --         }
-    --     }
-    -- end,
+  -- The first entry (without a key) will be the default handler
+  -- and will be called for each installed server that doesn't have
+  -- a dedicated handler.
+  function (server_name) -- default handler (optional)
+    require("lspconfig")[server_name].setup {
+      on_attach = on_attach,
+      capabilities = capabilities
+    }
+  end,
+  -- Next, you can provide targeted overrides for specific servers.
+  -- ["rust_analyzer"] = function ()
+  --     require("rust-tools").setup {}
+  -- end,
+  -- ["sumneko_lua"] = function ()
+  --     lspconfig.sumneko_lua.setup {
+  --         settings = {
+  --             Lua = {
+  --                 diagnostics = {
+  --                     globals = { "vim" }
+  --                 }
+  --             }
+  --         }
+  --     }
+  -- end,
 })
 
 
@@ -165,7 +165,7 @@ cmp.setup({
     { name = 'path',
       option = {
         get_cwd = function()
-            return vim.fn.getcwd()
+          return vim.fn.getcwd()
         end
       }
     }
