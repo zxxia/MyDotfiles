@@ -23,7 +23,7 @@ vim.keymap.set('n', '<leader>fr', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 vim.keymap.set('n', '<leader>fm', function()
-  builtin.lsp_document_symbols( { symbols = 'method' } )
+  builtin.lsp_document_symbols( { symbols = { 'method', 'function' } } )
 end, {})
 
 -- Ctrl-p = fuzzy finder
