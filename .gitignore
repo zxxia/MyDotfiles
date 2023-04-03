@@ -1,2 +1,4 @@
 .DS_Store
 tmux/.config/tmux/plugins
+vim/.vim/autoload/plug.vim
+vim/.vim/plugged
