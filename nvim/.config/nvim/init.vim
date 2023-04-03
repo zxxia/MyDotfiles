@@ -115,8 +115,21 @@ endif
 " Trigger autoread when changing buffers or coming back to vim in terminal.
 autocmd FocusGained,BufEnter * :silent! !
 
-" Make cursor to stay at the place where it was at previous file exit when opening the file
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+" Put these in an autocmd group, so that you can revert them with:
+" ":augroup vimStartup | exe 'au!' | augroup END"
+augroup vimStartup
+  au!
+
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid, when inside an event handler
+" (happens when dropping a file on gvim) and for a commit message (it's
+" likely a different one than last time).
+  autocmd BufReadPost *
+    \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+    \ |   exe "normal! g`\""
+    \ | endif
+
+augroup END
 
 " Remove trailing whitespace
 autocmd FileWritePre    * :call strip_trailing_spaces#StripTrailingWhitespace()
