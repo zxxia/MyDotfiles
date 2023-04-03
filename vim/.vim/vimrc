@@ -12,7 +12,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'Yggdroot/indentLine'
 " Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoUpdateBinaries'}
 " Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-python/python-syntax', {'for': 'python'}
@@ -21,8 +20,11 @@ Plug 'crusoexia/vim-monokai'
 Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': { -> mkdp#util#install() } }
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'lervag/vimtex'
 Plug 'pangloss/vim-javascript'
@@ -54,6 +56,7 @@ set splitright              " More natural split opening, cursor in right window
 let mapleader=' '           " Set space to leader key
 set showcmd
 set wildmenu                " Allow command menu for better command completion
+set wildmode=longest:full,full
 set pastetoggle=<F2>        " Press F2 to turn on paste mode
 set hidden                  " When on a buffer becomes hidden when it is abandoned.
 set hlsearch                " Highlight search results
@@ -66,17 +69,28 @@ set noswapfile
 set sidescroll=1
 set scrolloff=5             " 5 lines offset between the cursor and top/bottom margin
 set backspace=indent,eol,start " Allow backspace to delete to the line above
-set completeopt=longest,menuone
+set completeopt=menu,menuone,noselect,noinsert
 set undofile                " make undor available after closing files
 set undodir=~/.vim/undodir
 set colorcolumn=80          " Mark characters after line is longer than 80 characters.
 set nostartofline
 set autoread      " Reload files changed outside vim
-if !has('nvim')
-    set ttyfast
+set ttyfast
+set termguicolors
+" always show signcolumn
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
 endif
-" Trigger autoread when changing buffers or coming back to vim in terminal.
-au FocusGained,BufEnter * :silent! !
+set updatetime=300
+" Better display for messages
+set cmdheight=2
+
+
 highlight ColorColumn ctermbg=lightgrey guibg=white
 syntax enable               " Syntax Highlight
 " set background=light    "设置背景色"
@@ -98,9 +112,27 @@ else
     endif
 endif
 
-" Make cursor to stay at the place where it was at previous file exit when opening the file
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+" Trigger autoread when changing buffers or coming back to vim in terminal.
+autocmd FocusGained,BufEnter * :silent! !
 
+" Put these in an autocmd group, so that you can revert them with:
+" ":augroup vimStartup | exe 'au!' | augroup END"
+augroup vimStartup
+  au!
+
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid, when inside an event handler
+" (happens when dropping a file on gvim) and for a commit message (it's
+" likely a different one than last time).
+  autocmd BufReadPost *
+    \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+    \ |   exe "normal! g`\""
+    \ | endif
+
+augroup END
+
+" Auto-resize splits when Vim gets resized.
+autocmd VimResized * wincmd =
 
 " Remove trailing whitespace
 if !exists("*StripTrailingWhitespace")
@@ -169,9 +201,6 @@ xnoremap p pgvy
 
 " Keep cursor at the bottom of the visual selection after you yank it.
 vmap y ygv<Esc>
-
-" Auto-resize splits when Vim gets resized.
-autocmd VimResized * wincmd =
 
 if has('nvim-0.5.0')
   au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
@@ -430,21 +459,6 @@ nmap <leader>s <Plug>MarkdownPreview
 """""""""""""""""""
 " settings of coc "
 """""""""""""""""""
-
-" always show signcolumn
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-if has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
-
-set updatetime=300
-" Better display for messages
-set cmdheight=2
-
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
