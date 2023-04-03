@@ -8,7 +8,7 @@ let g:mkdp_auto_start = 0
 " set to 1, the nvim will auto close current preview window when change
 " from markdown buffer to another buffer
 " default: 1
-let g:mkdp_auto_close = 1
+let g:mkdp_auto_close = 0
 
 " set to 1, the vim will refresh markdown when save the buffer or
 " leave from insert mode, default 0 is auto refresh markdown as you edit or
@@ -72,8 +72,7 @@ let g:mkdp_preview_options = {
 let g:mkdp_markdown_css = ''
 
 " use a custom highlight style must absolute path
-let g:mkdp_highlight_css = '/Users/zxxia/.vim/plugged/markdown-preview.nvim/solarized_dark.css'
-" let g:mkdp_highlight_css = '/Users/zxxia/.vim/plugged/markdown-preview.nvim/github_markdown.css'
+let g:mkdp_highlight_css = ''
 
 " use a custom port to start server or random for empty
 let g:mkdp_port = ''
@@ -81,6 +80,6 @@ let g:mkdp_port = ''
 " preview page title
 " ${name} will be replace with the file name
 let g:mkdp_page_title = '「${name}」'
-nmap <leader>s <Plug>MarkdownPreview
+nnoremap <leader>s <Plug>MarkdownPreview
 " nmap <M-s> <Plug>MarkdownPreviewStop
 " nmap <C-p> <Plug>MarkdownPreviewToggle

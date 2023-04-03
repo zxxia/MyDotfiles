@@ -19,6 +19,9 @@ Plug 'jose-elias-alvarez/null-ls.nvim'
 
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'nvim-lualine/lualine.nvim'
+
+" mkdp#util#install() fails after 'do', checkout this github issue to fix
+" https://github.com/iamcco/markdown-preview.nvim/issues/497
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
