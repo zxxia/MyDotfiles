@@ -7,6 +7,7 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 endif
 
 call plug#begin(stdpath('data') . '/plugged')
+Plug 'cpea2506/one_monokai.nvim'
 Plug 'Yggdroot/indentLine'
 
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
@@ -43,7 +44,6 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
-Plug 'cpea2506/one_monokai.nvim'
 call plug#end()
 
 
@@ -95,7 +95,6 @@ set tags=./.tags;,.tags
 set signcolumn=yes
 syntax on               " Syntax Highlight
 " colorscheme monokai
-colorscheme one_monokai
 
 if has("win32")
   "Windows options here
