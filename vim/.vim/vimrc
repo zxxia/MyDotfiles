@@ -21,11 +21,16 @@ Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': { -> mkdp#util#in
 Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+if has('nvim') || has('patch-8.0.902')
+  Plug 'mhinz/vim-signify'
+else
+  Plug 'mhinz/vim-signify', { 'tag': 'legacy' }
+endif
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 
-Plug 'jackguo380/vim-lsp-cxx-highlight'
+" Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'lervag/vimtex'
 Plug 'pangloss/vim-javascript'
 call plug#end()
@@ -74,19 +79,11 @@ set undofile                " make undor available after closing files
 set undodir=~/.vim/undodir
 set colorcolumn=80          " Mark characters after line is longer than 80 characters.
 set nostartofline
-set autoread      " Reload files changed outside vim
+set autoread                " Reload files changed outside vim
 set ttyfast
 set termguicolors
 set tags=./.tags;,.tags
-" always show signcolumn
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-if has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
+set signcolumn=yes          " always show signcolumn
 set updatetime=300
 " Better display for messages
 set cmdheight=2
@@ -158,31 +155,21 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" autocmd FileType latex,tex,md,markdown,text setlocal spell
-" expand gnuplot extensions
-au BufNewFile,BufRead *.plt,*.gnuplot setf gnuplot
-
-" undo break points
-inoremap , ,<c-g>u
-inoremap . .<c-g>u
-inoremap ! !<c-g>u
-inoremap ? ?<c-g>u
-
 " Consistent with C and D
 nnoremap Y y$
 
 " Easy navigation among tabs
 nnoremap <Leader>h :bprevious<CR>
 nnoremap <Leader>l :bnext<CR>
-" nnoremap <Leader>j :bprevious<CR>
-" nnoremap <Leader>k :bnext<CR>
-
-" Keep visual mode after indent
-vnoremap > >gv
-vnoremap < <gv
 
 " Keep pane split when closing a buffer
 nmap <silent> <leader>d :bp\|bd #<CR>
+
+" undo break points
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
 
 "----------------------------------------------------------------------
 " INSERT 模式下使用 EMACS 键位
@@ -196,11 +183,27 @@ inoremap <c-d> <del>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
+" select the highlighted item when pop-up menu is visible in command mode
+" taken from https://stackoverflow.com/questions/14842987/vim-wildmenu-move-into-subdirectory-with-a-different-key-than-down
+let &wildcharm = &wildchar
+cnoremap <expr> <CR> wildmenumode() ? "\<Down>" : "\<CR>"
+
+" <Left> and <Right> to move the cursor instead of selecting a different match
+cnoremap <Left> <Space><BS><Left>
+cnoremap <Right> <Space><BS><Right>
+
+" Keep cursor at the bottom of the visual selection after you yank it.
+vnoremap y ygv<Esc>
+
+" Keep visual mode after indent
+vnoremap > >gv
+vnoremap < <gv
+
 " Prevent selecting and pasting from overwriting what you originally copied.
 xnoremap p pgvy
 
-" Keep cursor at the bottom of the visual selection after you yank it.
-vmap y ygv<Esc>
+" Escape terminal mode
+tnoremap <leader><Esc> <C-\><C-n>
 
 " let g:python3_host_prog = '/Users/zxxia/.virtualenvs/nvim/bin/python3.9'
 
@@ -262,6 +265,6 @@ let g:python_highlight_all = 1
 " set statusline+=%{gutentags#statusline()}
 
 " c++ syntax highlighting
-let g:cpp_class_scope_highlight = 1
-let g:cpp_member_variable_highlight = 1
-let g:cpp_class_decl_highlight = 1
+" let g:cpp_class_scope_highlight = 1
+" let g:cpp_member_variable_highlight = 1
+" let g:cpp_class_decl_highlight = 1
