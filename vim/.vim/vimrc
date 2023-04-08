@@ -169,6 +169,9 @@ nnoremap <Leader>l :bnext<CR>
 " Keep pane split when closing a buffer
 nmap <silent> <leader>d :bp\|bd #<CR>
 
+" Map :nohl backspace
+nnoremap <expr> <BS> v:hlsearch?':noh<cr>':'<BS>'
+
 " undo break points
 inoremap , ,<c-g>u
 inoremap . .<c-g>u
