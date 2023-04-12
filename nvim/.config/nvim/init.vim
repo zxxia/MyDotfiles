@@ -93,6 +93,12 @@ set autoread      " Reload files changed outside vim
 set termguicolors
 set tags=./.tags;,.tags
 set signcolumn=yes
+
+let g:loaded_netrw = 1
+let g:loaded_netrwPlugin = 1
+" let g:loaded_netrwSettings = 1
+" let g:loaded_netrwFileHandlers = 1
+
 syntax on               " Syntax Highlight
 " colorscheme monokai
 
