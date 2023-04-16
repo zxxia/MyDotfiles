@@ -178,6 +178,10 @@ nnoremap <silent> <leader>d :bp\|bd #<CR>
 " Map :nohl backspace
 nnoremap <expr> <BS> v:hlsearch?':noh<cr>':'<BS>'
 
+" keep cursor still when searching the word under cursor downwards or upwards
+nnoremap * :keepjumps normal! mi*`i<CR>
+nnoremap # :keepjumps normal! mi#`i<CR>
+
 " undo break points
 inoremap , ,<c-g>u
 inoremap . .<c-g>u
