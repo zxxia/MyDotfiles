@@ -230,5 +230,4 @@ lua <<EOF
 vim.diagnostic.config({
   virtual_text = false,
 })
-require('lualine').setup()
 EOF
