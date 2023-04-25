@@ -64,6 +64,10 @@ mason_lspconfig.setup_handlers({
   -- end,
 })
 
+require("lspconfig").ccls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities
+}
 
 local luasnip = require("luasnip")
 -- Setup nvim-cmp.
