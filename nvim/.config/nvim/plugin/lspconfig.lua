@@ -34,7 +34,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protoc
 require("mason").setup()
 mason_lspconfig = require("mason-lspconfig")
 mason_lspconfig.setup {
-  ensure_installed = { "pyright" }
+  ensure_installed = { "pyright", "jsonls" }
 }
 
 mason_lspconfig.setup_handlers({
