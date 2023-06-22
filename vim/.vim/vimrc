@@ -18,7 +18,12 @@ Plug 'vim-python/python-syntax', {'for': 'python'}
 Plug 'crusoexia/vim-monokai'
 " Plug 'ludovicchabant/vim-gutentags'
 Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': { -> mkdp#util#install() } }
-Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+if has('python') || has('python3')
+    Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+else
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+endif
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 if has('nvim') || has('patch-8.0.902')
