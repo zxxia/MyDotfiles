@@ -171,6 +171,14 @@ nnoremap Y y$
 nnoremap <Leader>h :bprevious<CR>
 nnoremap <Leader>l :bnext<CR>
 
+" Fugitive conflict resolution
+" diffget from HEAD
+nnoremap dgh :diffget //2<CR>
+" diffget from merge branch
+nnoremap dgl :diffget //3<CR>
+" stop Q triggering Ex mode
+nnoremap Q <Nop>
+
 " Keep pane split when closing a buffer
 nmap <silent> <leader>d :bp\|bd #<CR>
 
