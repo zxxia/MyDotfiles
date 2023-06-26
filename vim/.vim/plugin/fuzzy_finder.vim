@@ -14,7 +14,7 @@ if has('python') || has('python3')
     let g:Lf_GtagsAutoGenerate = 0
     if v:version >= 802
         let g:Lf_WindowPosition = 'popup'
-        let g:Lf_PreviewInPopup = 0
+        let g:Lf_PreviewInPopup = 1
     endif
 
     let g:Lf_RgConfig = ["--max-columns=150"]
