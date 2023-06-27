@@ -24,7 +24,10 @@ else
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
 endif
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+if has('patch-8.1.1719')
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+endif
 
 if has('nvim') || has('patch-8.0.902')
   Plug 'mhinz/vim-signify'
@@ -75,6 +78,7 @@ set showmatch               " Show matching parentesis, brackets, and braces
 set matchtime=2                   " Flash matching pair for 0.2 seconds.
 set nowrap
 set nobackup                " Do not create swap files
+set nowritebackup
 set noswapfile
 set sidescroll=1
 set scrolloff=5             " 5 lines offset between the cursor and top/bottom margin
