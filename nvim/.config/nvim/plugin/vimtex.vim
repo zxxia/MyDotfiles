@@ -29,8 +29,10 @@ if has('unix')
             endif
         endfunction
     else
-        let g:latex_view_general_viewer = "zathura"
-        let g:vimtex_view_method = "zathura"
+        if executable("zathura")
+            let g:latex_view_general_viewer = "zathura"
+            let g:vimtex_view_method = "zathura"
+        endif
     endif
 elseif has('win32')
 
