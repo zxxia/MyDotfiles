@@ -150,13 +150,6 @@ autocmd TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=1
 
 autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
 
-
-" Easier split navigations
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
 " Consistent with C and D
 nnoremap Y y$
 
