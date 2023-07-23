@@ -1,4 +1,5 @@
 if has('patch-8.1.1719') && executable('node')
+    let g:coc_disable_startup_warning = 1
     " Use tab for trigger completion with characters ahead and navigate
     " NOTE: There's always complete item selected by default, you may want to enable
     " no select by `"suggest.noselect": true` in your configuration file
