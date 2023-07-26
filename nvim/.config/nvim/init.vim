@@ -27,6 +27,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-obsession'
 Plug 'lervag/vimtex'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 
