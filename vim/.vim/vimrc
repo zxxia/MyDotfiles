@@ -12,12 +12,15 @@ call plug#begin('~/.vim/plugged')
 Plug 'Yggdroot/indentLine'
 " Plug 'scrooloose/nerdtree'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-python/python-syntax', {'for': 'python'}
+if v:version >= 702
+    Plug 'vim-airline/vim-airline'
+endif
 Plug 'crusoexia/vim-monokai'
 " Plug 'ludovicchabant/vim-gutentags'
-Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': { -> mkdp#util#install() } }
-if has('python') || has('python3')
+if v:version >= 801
+    Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': { -> mkdp#util#install() } }
+endif
+if has('patch-7.4.1126') && (has('python') || has('python3'))
     Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 else
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -37,9 +40,15 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-obsession'
+if has('patch-8.0.1453')
+    Plug 'lervag/vimtex'
+else
+    Plug 'lervag/vimtex', { 'tag': '1.0'}
+endif
 
 " Plug 'jackguo380/vim-lsp-cxx-highlight'
-Plug 'lervag/vimtex'
+Plug 'vim-python/python-syntax', {'for': 'python'}
+Plug 'bfrg/vim-cpp-modern'
 Plug 'pangloss/vim-javascript'
 call plug#end()
 

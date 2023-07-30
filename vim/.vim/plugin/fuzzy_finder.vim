@@ -1,4 +1,4 @@
-if has('python') || has('python3')
+if has('patch-7.4.1126') && (has('python') || has('python3'))
     let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
     let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
     let g:Lf_WorkingDirectoryMode = 'ac'
