@@ -2,7 +2,7 @@
     email = zxxia@uchicago.edu
     name = Zhengxu Xia
 [core]
-    editor = nvim
+    editor = vim
 
 [merge]
     conflictstyle = diff3
