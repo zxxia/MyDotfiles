@@ -229,6 +229,9 @@ vnoremap y ygv<Esc>
 vnoremap > >gv
 vnoremap < <gv
 
+" Reselect pasted text
+nnoremap gp `[v`]
+
 " Prevent selecting and pasting from overwriting what you originally copied.
 xnoremap p pgvy
 
