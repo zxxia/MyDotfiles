@@ -4,6 +4,9 @@ if not lualine_status_ok then
   return
 end
 lualine.setup{
+  options = {
+    theme = 'powerline',
+	},
   sections = {
     lualine_c = {
       {
