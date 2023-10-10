@@ -11,3 +11,7 @@
 [oh-my-zsh]
     hide-info = 1
     hide-dirty = 1
+
+[pull]
+    ff = only
+
