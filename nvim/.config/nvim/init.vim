@@ -16,8 +16,6 @@ Plug 'kyazdani42/nvim-tree.lua'
 Plug 'L3MON4D3/LuaSnip'
 " , {'tag': 'v1.2.*'}  " , 'do': 'make install_jsregexp'}
 
-Plug 'jose-elias-alvarez/null-ls.nvim'
-
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'nvim-lualine/lualine.nvim'
 
