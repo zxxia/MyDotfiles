@@ -6,8 +6,8 @@ end
 
 require('nvim-treesitter.configs').setup {
   -- One of "all", "maintained" (parsers with maintainers), or a list of languages
-  ensure_installed = { 
-    "bash", "c", "c_sharp", "comment", "cpp", "javascript", "latex", "lua", 
+  ensure_installed = {
+    "bash", "c", "c_sharp", "comment", "cpp", "javascript", "latex", "lua",
     "markdown", "python", "vim" },
 
   -- Install languages synchronously (only applied to `ensure_installed`)
@@ -35,8 +35,8 @@ require('nvim-treesitter.configs').setup {
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
-
-  context_commentstring = {
-    enable = true
-  }
 }
+
+require('ts_context_commentstring').setup {}
+-- skip backwards compatibility routines and speed up loading
+vim.g.skip_ts_context_commentstring_module = true
