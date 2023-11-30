@@ -107,3 +107,5 @@ cmp.setup({
     }
   }
 })
+
+require "lsp_signature".setup()
