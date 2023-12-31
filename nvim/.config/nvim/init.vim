@@ -18,6 +18,7 @@ Plug 'L3MON4D3/LuaSnip'
 
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'nvim-lualine/lualine.nvim'
+Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 
 " mkdp#util#install() fails after 'do', checkout this github issue to fix
 " https://github.com/iamcco/markdown-preview.nvim/issues/497
