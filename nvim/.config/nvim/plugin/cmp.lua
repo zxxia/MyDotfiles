@@ -117,6 +117,13 @@ cmp.setup({
     }
   }
 })
+cmp.setup.filetype("tex", {
+  sources = {
+    { name = 'vimtex' },
+    { name = 'buffer' },
+    -- other sources
+  },
+})
 
 require "lsp_signature".setup({
   hint_enable = false
