@@ -99,6 +99,7 @@ cmp.setup({
         luasnip = "[Snippet]",
         buffer = "[Buffer]",
         path = "[Path]",
+        vimtex = "[Vimtex]",
       })[entry.source.name]
       return vim_item
     end,
