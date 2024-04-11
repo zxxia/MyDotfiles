@@ -13,3 +13,5 @@ gitsigns.setup{
     changedelete = { text = '~' },
   },
 }
+vim.keymap.set('n', ']c', gitsigns.next_hunk, {})
+vim.keymap.set('n', '[c', gitsigns.prev_hunk, {})
