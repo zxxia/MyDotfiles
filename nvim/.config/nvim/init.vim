@@ -65,6 +65,7 @@ set cursorline              " Show a horizontal line on cursorline
 set ruler                   " Show line #, column #
 set fileformat=unix         " Unix file format
 set encoding=UTF-8          " UTF-8 encoding
+set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
 set mouse=a                 " Enable mouse in all editing mode
 set selectmode=mouse        " Enable mouse input
 set ignorecase              " Ignore case difference in search
