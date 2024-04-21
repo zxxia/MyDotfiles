@@ -13,8 +13,8 @@ Plug 'Yggdroot/indentLine'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 
-Plug 'L3MON4D3/LuaSnip'
-" , {'tag': 'v1.2.*'}  " , 'do': 'make install_jsregexp'}
+Plug 'L3MON4D3/LuaSnip', {'tag': 'v2.*', 'do': 'make install_jsregexp'}
+Plug 'rafamadriz/friendly-snippets'
 
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'nvim-lualine/lualine.nvim'
@@ -39,13 +39,13 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 Plug 'hrsh7th/cmp-path'
 Plug 'micangl/cmp-vimtex'
+Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'lewis6991/gitsigns.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.5' }
-Plug 'ray-x/lsp_signature.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
 call plug#end()
 
 

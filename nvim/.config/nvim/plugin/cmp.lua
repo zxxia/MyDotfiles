@@ -1,5 +1,6 @@
 -- Setup nvim-cmp.
 local luasnip = require("luasnip")
+require("luasnip.loaders.from_vscode").lazy_load()
 local cmp = require("cmp")
 local check_backspace = function()
   local col = vim.fn.col "." - 1
@@ -56,15 +57,15 @@ cmp.setup({
       c = cmp.mapping.close(),
     }),
     ['<CR>'] = cmp.mapping({
-     i = function(fallback)
-         if cmp.visible() and cmp.get_active_entry() then
-           cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-         else
-           fallback()
-         end
-       end,
-       s = cmp.mapping.confirm({ select = true }),
-       c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
+      i = function(fallback)
+        if cmp.visible() and cmp.get_active_entry() then
+          cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+        else
+          fallback()
+        end
+      end,
+      s = cmp.mapping.confirm({ select = true }),
+      c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
      }),
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
@@ -124,8 +125,4 @@ cmp.setup.filetype("tex", {
     { name = 'buffer' },
     -- other sources
   },
-})
-
-require "lsp_signature".setup({
-  hint_enable = false
 })
