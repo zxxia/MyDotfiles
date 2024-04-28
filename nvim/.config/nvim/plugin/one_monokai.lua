@@ -32,14 +32,16 @@ one_monokai.setup({
   --   black = "#272822", -- "#1e2024",
   --   none = "NONE",
   -- },
-  -- themes = function(colors)
-  --   return {
+  themes = function(colors)
+    return {
+      BufferLineNumbers = {},
+      BufferLineNumbersVisible = {},
   --     -- Normal = { fg = colors.background },
   --     Comment = { fg = colors.warm_gray, italic = true },
   --     -- ErrorMsg = { fg = "black", bg = "#ec6075", standout = true },
   --     -- NormalFloat = { link = "Normal" },
   --     Visual = { bg = colors.light_gray }
-  --   }
-  -- end,
+    }
+  end,
 }
 )
