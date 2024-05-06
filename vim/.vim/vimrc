@@ -170,6 +170,10 @@ augroup stripTrailingSpace
     autocmd BufWritePre     * :call StripTrailingWhitespace()
 augroup END
 
+" Move within the wrapped lines
+nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
+nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
+
 " Consistent with C and D
 nnoremap Y y$
 
