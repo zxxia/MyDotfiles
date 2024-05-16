@@ -25,7 +25,12 @@ lualine.setup{
    }
 }
 
-require("bufferline").setup{
+local bufferline_status_ok, bufferline = pcall(require, 'bufferline')
+if not bufferline_status_ok then
+  print("Warning: bufferline not available, skipping configuration.")
+  return
+end
+bufferline.setup{
   options = {
     numbers = "buffer_id",
   }
