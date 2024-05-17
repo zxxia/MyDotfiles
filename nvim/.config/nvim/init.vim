@@ -25,7 +25,9 @@ Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
+if !has('nvim-0.10')
+ Plug 'tpope/vim-commentary'
+endif
 Plug 'tpope/vim-obsession'
 Plug 'lervag/vimtex'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
